@@ -1,6 +1,6 @@
 import classes from "./starting-page.module.css";
 
-export default function StartingPage() {
+export default function StartingPageContent() {
   // Show Link to Login page if NOT auth
 
   return (
