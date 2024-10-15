@@ -1,24 +1,80 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import classes from "./auth-form.module.css";
+import { logInUser } from "@/helpers/user/logInUser";
+import { createUser } from "@/helpers/user/createUser";
 
 export default function AuthForm() {
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+
   const [isLogin, setIsLogin] = useState(true);
+  const [error, setError] = useState(null);
 
   function switchAuthModeHandler() {
     setIsLogin((prevState) => !prevState);
   }
 
+  function validateInput(email, password) {
+    return !(
+      !email ||
+      email.trim() === "" ||
+      !email.includes("@") ||
+      !password ||
+      password.trim().length < 7
+    );
+  }
+
+  async function submitHandler(event) {
+    event.preventDefault();
+
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    if (!validateInput(enteredEmail, enteredPassword)) {
+      setError("Invalid credentials. Please try again.");
+      return;
+    }
+
+    setError(null);
+
+    if (isLogin) {
+      //log user in
+      try {
+        const result = await logInUser(enteredEmail, enteredPassword);
+        // Handle successful login (e.g., redirect or update UI)
+      } catch (error) {
+        setError(error.message);
+      }
+    } else {
+      //create user
+      try {
+        const result = await createUser(enteredEmail, enteredPassword);
+        // Handle successful sign-up (e.g., redirect or update UI)
+        console.log(result);
+      } catch (error) {
+        setError(error.message);
+        console.error(error);
+      }
+    }
+  }
+
   return (
     <section className={classes.auth}>
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
-      <form>
+      {error && <p className={classes.error}>{error}</p>}
+      <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" required />
+          <input type="email" id="email" required ref={emailInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor="password">Your Password</label>
-          <input type="password" id="password" required />
+          <input
+            type="password"
+            id="password"
+            required
+            ref={passwordInputRef}
+          />
         </div>
         <div className={classes.actions}>
           <button>{isLogin ? "Login" : "Create Account"}</button>

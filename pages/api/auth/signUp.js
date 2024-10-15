@@ -1,5 +1,5 @@
 import { hashPassword } from "@/helpers/hash";
-import { connectToDatabase } from "@/lib/db";
+import { connectToDatabase, insertDocument } from "@/lib/db";
 
 export default async function handler(req, res) {
   try {
@@ -11,15 +11,15 @@ export default async function handler(req, res) {
         email.trim() === "" ||
         !email.includes("@") ||
         !password ||
-        !password.trim().length < 7
+        password.trim().length < 7
       ) {
-        res.status(422).json({ message: "Invalid input" });
+        res.status(422).json({ message: "Invalid input8t" });
         return;
       }
 
       const { client, dbName } = await connectToDatabase("Auth");
 
-      const hashedPassword = hashPassword(password);
+      const hashedPassword = await hashPassword(password);
 
       const newUser = {
         email,
