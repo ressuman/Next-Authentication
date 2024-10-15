@@ -41,8 +41,13 @@ export default function AuthForm() {
     if (isLogin) {
       //log user in
       try {
-        const result = await logInUser(enteredEmail, enteredPassword);
         // Handle successful login (e.g., redirect or update UI)
+        const result = await signIn("credentials", {
+          redirect: false,
+          email: enteredEmail,
+          password: enteredPassword,
+        });
+        console.log(result);
       } catch (error) {
         setError(error.message);
       }

@@ -8,6 +8,12 @@ export default NextAuth({
     //jwt: true,
     strategy: "jwt",
   },
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
+  },
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
