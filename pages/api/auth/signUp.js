@@ -1,5 +1,10 @@
 import { hashPassword } from "@/helpers/hash";
-import { connectToDatabase, insertDocument } from "@/lib/db";
+import {
+  checkDocumentExists,
+  connectToDatabase,
+  getAllDocuments,
+  insertDocument,
+} from "@/lib/db";
 
 export default async function handler(req, res) {
   try {
@@ -13,11 +18,29 @@ export default async function handler(req, res) {
         !password ||
         password.trim().length < 7
       ) {
-        res.status(422).json({ message: "Invalid input8t" });
+        res.status(422).json({ message: "Invalid input" });
         return;
       }
 
       const { client, dbName } = await connectToDatabase("Auth");
+
+      // Check for existing email
+      // const existingUsers = await getAllDocuments(client, dbName, "users", {
+      //   email,
+      // });
+      // if (existingUsers.length > 0) {
+      //   res.status(422).json({ message: "Email already exists" });
+      //   return;
+      // }
+
+      const emailExists = await checkDocumentExists(client, dbName, "users", {
+        email,
+      });
+      if (emailExists) {
+        res.status(422).json({ message: "Email already exists" });
+        client.close();
+        return;
+      }
 
       const hashedPassword = await hashPassword(password);
 
@@ -40,6 +63,7 @@ export default async function handler(req, res) {
         message: "Signed Up!",
         data: newUser,
       });
+      client.close();
     } else {
       res.status(405).json({ message: "Method not allowed" });
     }
