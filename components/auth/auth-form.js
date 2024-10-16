@@ -47,7 +47,10 @@ export default function AuthForm() {
           email: enteredEmail,
           password: enteredPassword,
         });
-        console.log(result);
+
+        if (!result.error) {
+          //set some auth state
+        }
       } catch (error) {
         setError(error.message);
       }
