@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import classes from "./auth-form.module.css";
-import { logInUser } from "@/helpers/user/logInUser";
+//import { logInUser } from "@/helpers/user/logInUser";
 import { createUser } from "@/helpers/user/createUser";
 import { useSession, signIn, signOut } from "next-auth/react";
 
