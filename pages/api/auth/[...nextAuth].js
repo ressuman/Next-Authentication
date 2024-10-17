@@ -47,7 +47,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 //   ],
 // });
 
-const authOptions = {
+export const authOptions = {
   session: {
     strategy: "jwt",
   },
@@ -63,6 +63,7 @@ const authOptions = {
         const { client, dbName } = await connectToDatabase("Auth");
 
         const usersCollection = client.db(dbName).collection("users");
+
         const user = await usersCollection.findOne({
           email: credentials.email,
         });

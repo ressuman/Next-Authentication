@@ -3,6 +3,7 @@ import classes from "./auth-form.module.css";
 //import { logInUser } from "@/helpers/user/logInUser";
 import { createUser } from "@/helpers/user/createUser";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function AuthForm() {
   const emailInputRef = useRef();
@@ -10,6 +11,8 @@ export default function AuthForm() {
 
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState(null);
+
+  const router = useRouter();
 
   function switchAuthModeHandler() {
     setIsLogin((prevState) => !prevState);
@@ -50,6 +53,7 @@ export default function AuthForm() {
 
         if (!result.error) {
           //set some auth state
+          router.replace("/profile");
         }
       } catch (error) {
         setError(error.message);
