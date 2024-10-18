@@ -8,6 +8,7 @@ import {
 import { hashPassword, verifyPassword } from "@/helpers/hash";
 
 export default async function handler(req, res) {
+  // let client;
   try {
     if (req.method !== "PATCH") {
       res.status(401).json({ message: "Incorrect method used" });
@@ -24,8 +25,9 @@ export default async function handler(req, res) {
     }
 
     const userEmail = session.user.email;
-    const oldPassword = req.body.oldPassword;
-    const newPassword = req.body.newPassword;
+    // const oldPassword = req.body.oldPassword;
+    // const newPassword = req.body.newPassword;
+    const { oldPassword, newPassword } = req.body;
 
     const { client, dbName } = await connectToDatabase("Auth");
     const collectionName = "users";
