@@ -12,7 +12,8 @@ This project is a Next.js 14 application utilizing NextAuth for authentication. 
   - [Setup](#setup)
   - [Usage](#usage)
   - [API Routes](#api-routes)
-  - [Contributing](#contributing)
+  - [Gif](#gif)
+  - [](#)
   - [Getting Started](#getting-started)
   - [Learn More](#learn-more)
   - [Deploy on Vercel](#deploy-on-vercel)
@@ -129,9 +130,11 @@ styles/
 - **PATCH** `/api/user/change-password` - Change the current user's password.
 - **GET** `/api/auth/[...nextauth]` - Handle authentication using NextAuth.js.
 
-## Contributing
+## Gif
 
-Contributions are welcome! Please open an issue or submit a pull request for any features or improvements you'd like to suggest.
+Here is an expected gif of the preview of the App(Next Authentication)
+
+## ![Next Authentication gif](./public/next-authentication.gif)
 
 ---
 
