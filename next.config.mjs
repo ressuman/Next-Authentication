@@ -14,6 +14,8 @@ const nextConfig = {
         },
       };
     }
+
+    config.module.exprContextCritical = false;
     return config;
   },
 };
