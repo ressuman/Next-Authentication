@@ -6,7 +6,8 @@ import {
   updateUserPassword,
 } from "@/lib/db";
 import { hashPassword, verifyPassword } from "@/helpers/hash";
-import { authOptions } from "../auth/[...nextauth].js";
+import { authOptions } from "../auth/[...nextauth]";
+//import { authOptions } from "@pages/api/auth/[...nextauth]";
 
 export default async function handler(req, res) {
   // let client;
